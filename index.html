@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudHub - Udostępniaj swoje wideo</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0e7ff;
+            color: #333;
+        }
+
+        /* Nagłówek */
+        header {
+            background-color: #6b48ff;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Główna sekcja */
+        .main-section {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .upload-area {
+            background-color: #8c65ff;
+            padding: 40px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+            color: white;
+        }
+
+        .upload-area h2 {
+            margin-top: 0;
+        }
+
+        #dropZone {
+            border: 2px dashed #fff;
+            padding: 30px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #dropZone:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        #videoFile {
+            display: none;
+        }
+
+        button {
+            background-color: #4b2ecc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        button:hover {
+            background-color: #5c3cff;
+        }
+
+        /* Stopka */
+        footer {
+            background-color: #6b48ff;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">CloudHub</div>
+        <nav>
+            <a href="#">Strona główna</a>
+            <a href="#">O nas</a>
+            <a href="#">Kontakt</a>
+        </nav>
+    </header>
+
+    <section class="main-section">
+        <div class="upload-area">
+            <h2>Udostępnij swoje wideo</h2>
+            <p>Przeciągnij i upuść lub kliknij, aby przesłać plik</p>
+            <div id="dropZone">
+                Wybierz plik wideo
+                <input type="file" id="videoFile" accept="video/*">
+            </div>
+            <button id="uploadButton">Prześlij</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 CloudHub. Wszystkie prawa zastrzeżone.</p>
+    </footer>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const videoFile = document.getElementById('videoFile');
+        const uploadButton = document.getElementById('uploadButton');
+
+        // Obsługa kliknięcia w drop zone
+        dropZone.addEventListener('click', () => {
+            videoFile.click();
+        });
+
+        // Obsługa drag and drop
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.style.backgroundColor = 'transparent';
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.backgroundColor = 'transparent';
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                videoFile.files = files;
+                alert('Plik wybrany: ' + files[0].name);
+            }
+        });
+
+        // Obsługa wyboru pliku
+        videoFile.addEventListener('change', () => {
+            if (videoFile.files.length > 0) {
+                alert('Plik wybrany: ' + videoFile.files[0].name);
+            }
+        });
+
+        // Obsługa przycisku przesyłania
+        uploadButton.addEventListener('click', () => {
+            if (videoFile.files.length > 0) {
+                alert('Rozpoczęto przesyłanie: ' + videoFile.files[0].name);
+                // Tutaj można dodać logikę przesyłania pliku na serwer
+            } else {
+                alert('Proszę najpierw wybrać plik wideo!');
+            }
+        });
+    </script>
+</body>
+</html>
